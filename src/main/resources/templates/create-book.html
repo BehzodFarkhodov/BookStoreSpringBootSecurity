@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create a New Book</h2>
+    <form th:action="@{/book/create-book}" method="post">
+        <div class="form-group">
+            <label for="name">Book Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter book name" required>
+        </div>
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
+        </div>
+        <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="Enter author" required>
+        </div>
+        <div class="form-group">
+            <label for="page">Page Count</label>
+            <input type="number" class="form-control" id="page" name="page" placeholder="Enter page count" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="Enter price" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Book</button>
+    </form>
+    <h3 class="text-center mt-5">Your Created Books</h3>
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="thead-dark">
+        <tr>
+            <th>Book Name</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Page Count</th>
+            <th>Price</th>
+            <th>Action</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.page}"></td>
+            <td th:text="${book.price}"></td>
+            <td>
+                <form th:action="@{/book/book-delete/{id}(id=${book.id})}" method="post"
+                      onsubmit="return confirm('Are you sure you want to delete this book?');">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/book/book-update/{id}(id=${book.id})}" method="post"
+                      onsubmit="return confirm('Are you sure you want to update this book?');">
+                    <button type="submit" class="btn btn-danger">Update</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
